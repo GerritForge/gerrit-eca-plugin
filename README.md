@@ -34,3 +34,31 @@ Individual is not a committer, but has a ECA and is being reject:
 * Is the email address they're committing with the same as the email address in LDAP?
 * Is the individual in the "Has ECA" LDAP group?
 * Is the ECA associated with the right user id?
+
+How to build
+============
+
+The plugin can only be built in tree mode, by cloning
+Gerrit and the `gerrit-eca-plugin` plugin code, and checking them out on the desired branch.
+
+Example of cloning Gerrit and `gerrit-eca-plugin` for a build:
+
+```
+git clone https://gerrit.googlesource.com/gerrit
+git clone https://review.gerrithub.io/GerritForge/gerrit-eca-plugin
+
+cd gerrit/plugins
+ln -s ../../gerrit-eca-plugin .
+rm external_plugin_deps.bzl
+ln -s gerrit-eca-plugin/external_plugin_deps.bzl .
+```
+
+Example of building the `gerrit-eca-plugin` plugin:
+
+```
+cd gerrit
+bazel build plugins/gerrit-eca-plugin
+```
+
+The `gerrit-eca-plugin.jar` plugin is generated to
+`bazel-bin/plugins/gerrit-eca-plugin/gerrit-eca-plugin.jar`.
