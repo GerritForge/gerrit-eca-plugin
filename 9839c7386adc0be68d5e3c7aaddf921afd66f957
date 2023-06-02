@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "525de6fb_925aa359",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-02T07:21:22Z",
+      "side": 1,
+      "message": "Good job @David, do you know why of this special auto-value processor?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 102
+      },
+      "revId": "9839c7386adc0be68d5e3c7aaddf921afd66f957",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
