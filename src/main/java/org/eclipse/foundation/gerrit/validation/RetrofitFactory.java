@@ -10,6 +10,8 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
@@ -17,13 +19,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-
 import okhttp3.ConnectionSpec;
 import okhttp3.Dispatcher;
 import okhttp3.HttpUrl;
@@ -31,6 +26,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.internal.Util;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
