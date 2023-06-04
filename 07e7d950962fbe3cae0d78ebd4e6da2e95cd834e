@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9307818_830a3681",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-04T21:34:55Z",
+      "side": 1,
+      "message": "@Matthias could you provisionally set this one already on the EGit and JGit projects on the Eclispe FDN Gerrit project?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "07e7d950962fbe3cae0d78ebd4e6da2e95cd834e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "617762fb_e7fe15d1",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-04T21:34:55Z",
+      "side": 1,
+      "message": "Do we want to use a different message here? (e.g. This project does not require Eclipse ECA validation)",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "07e7d950962fbe3cae0d78ebd4e6da2e95cd834e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
