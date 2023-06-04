@@ -9,11 +9,16 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
+import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.annotations.Listen;
+import com.google.gerrit.extensions.annotations.PluginName;
+import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.events.CommitReceivedEvent;
 import com.google.gerrit.server.git.validators.CommitValidationException;
 import com.google.gerrit.server.git.validators.CommitValidationListener;
 import com.google.gerrit.server.git.validators.CommitValidationMessage;
+import com.google.gerrit.server.project.ProjectCache;
+import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.squareup.moshi.JsonAdapter;
@@ -55,9 +60,15 @@ public class EclipseCommitValidationListener implements CommitValidationListener
 
   private final APIService apiService;
   private final JsonAdapter<ValidationResponse> responseAdapter;
+  private final String pluginName;
+  private final ProjectCache projectCache;
+  private final PluginConfigFactory pluginCfgFactory;
 
   @Inject
-  public EclipseCommitValidationListener() {
+  public EclipseCommitValidationListener(
+      @PluginName String pluginName,
+      ProjectCache projectCache,
+      PluginConfigFactory pluginCfgFactory) {
     RetrofitFactory retrofitFactory = new RetrofitFactory();
     this.apiService = retrofitFactory.newService(APIService.BASE_URL, APIService.class);
     Optional<JsonAdapter<ValidationResponse>> adapter =
@@ -66,6 +77,9 @@ public class EclipseCommitValidationListener implements CommitValidationListener
       throw new IllegalStateException("Cannot process validation responses, not continuing");
     }
     this.responseAdapter = adapter.get();
+    this.pluginName = pluginName;
+    this.projectCache = projectCache;
+    this.pluginCfgFactory = pluginCfgFactory;
   }
 
   /**
@@ -77,9 +91,19 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     List<CommitValidationMessage> messages = new ArrayList<>();
     List<String> errors = new ArrayList<>();
 
+    Project.NameKey project = receiveEvent.project.getNameKey();
+    // Check whether or not the validation is enabled for this project
+    if (!isEnabledForProject(project)) {
+      if (log.isDebugEnabled()) {
+        log.debug(
+            "Plugin {} is not enabled for project {}: Skip validation", pluginName, project.get());
+      }
+      return addSuccessMessage(messages, "This project does not require Eclipse ECA validation.");
+    }
+
     // create the request container
     ValidationRequest.Builder req = ValidationRequest.builder();
-    req.repoUrl(receiveEvent.project.getNameKey().toString());
+    req.repoUrl(project.toString());
     req.provider("gerrit");
     req.strictMode(true);
 
@@ -161,8 +185,36 @@ public class EclipseCommitValidationListener implements CommitValidationListener
       throw new CommitValidationException(errors.get(0), messages);
     }
 
-    messages.add(new CommitValidationMessage("This commit passes Eclipse validation.", false));
+    return addSuccessMessage(messages, "This commit passes Eclipse validation.");
+  }
+
+  private static List<CommitValidationMessage> addSuccessMessage(
+      List<CommitValidationMessage> messages, String message) {
+    messages.add(new CommitValidationMessage(message, false));
     return messages;
+  }
+
+  /**
+   * Check whether or not ECA plugin is enabled for this project.
+   *
+   * @param project to check
+   * @return true if ECA check is enabled for this project or any parent projects in project
+   *     hierarchy, false otherwise.
+   */
+  private boolean isEnabledForProject(Project.NameKey project) {
+    Optional<ProjectState> projectState = projectCache.get(project);
+    if (!projectState.isPresent()) {
+      log.error(
+          "Failed to check if {} is enabled for project {}: Project not found",
+          pluginName,
+          project.get());
+      return false;
+    }
+    return "true"
+        .equals(
+            pluginCfgFactory
+                .getFromProjectConfigWithInheritance(projectState.get(), pluginName)
+                .getString("enabled", "false"));
   }
 
   /**
