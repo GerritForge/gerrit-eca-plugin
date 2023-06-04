@@ -10,11 +10,10 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
-import java.util.Map;
-
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import java.util.Map;
 
 /**
  * Represents an internal response for a call to this API.

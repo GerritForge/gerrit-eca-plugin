@@ -10,11 +10,10 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
-import java.util.List;
-
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import java.util.List;
 
 /**
  * Contains information generated about a commit that was submitted for validation to the API.

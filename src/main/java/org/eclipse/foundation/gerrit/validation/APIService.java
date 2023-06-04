@@ -11,7 +11,6 @@
 package org.eclipse.foundation.gerrit.validation;
 
 import java.util.concurrent.CompletableFuture;
-
 import okhttp3.HttpUrl;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -21,7 +20,6 @@ interface APIService {
 
   static final HttpUrl BASE_URL = HttpUrl.get("https://api.eclipse.org/");
 
-	@POST("/git/eca")
-	CompletableFuture<Response<ValidationResponse>> validate(
-			@Body ValidationRequest request);
+  @POST("/git/eca")
+  CompletableFuture<Response<ValidationResponse>> validate(@Body ValidationRequest request);
 }

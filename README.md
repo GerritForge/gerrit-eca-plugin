@@ -62,3 +62,12 @@ bazel build plugins/gerrit-eca-plugin
 
 The `gerrit-eca-plugin.jar` plugin is generated to
 `bazel-bin/plugins/gerrit-eca-plugin/gerrit-eca-plugin.jar`.
+
+Code Style
+==========
+
+To format Java source code, this plugin uses the
+[google-java-format](https://github.com/google/google-java-format)
+tool (version 1.7), and to format Bazel `BUILD`, `WORKSPACE` and `.bzl` files the
+[buildifier](https://github.com/bazelbuild/buildtools/tree/master/buildifier)
+tool (version 4.0.0).

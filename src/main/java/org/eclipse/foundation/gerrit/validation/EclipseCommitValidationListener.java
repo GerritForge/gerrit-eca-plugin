@@ -9,21 +9,6 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-
-import org.eclipse.foundation.gerrit.validation.CommitStatus.CommitStatusMessage;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gerrit.extensions.annotations.Listen;
 import com.google.gerrit.server.events.CommitReceivedEvent;
 import com.google.gerrit.server.git.validators.CommitValidationException;
@@ -33,9 +18,21 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonEncodingException;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
+import org.eclipse.foundation.gerrit.validation.CommitStatus.CommitStatusMessage;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Response;
 
 /**
@@ -135,8 +132,7 @@ public class EclipseCommitValidationListener implements CommitValidationListener
       }
       for (CommitStatus c : response.commits().values()) {
         messages.addAll(
-            c.messages()
-                .stream()
+            c.messages().stream()
                 .map(
                     message ->
                         new CommitValidationMessage(
