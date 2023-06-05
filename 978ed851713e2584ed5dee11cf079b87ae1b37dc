@@ -16,6 +16,24 @@
       "message": "Should we also say something on the README.md of the project?",
       "revId": "978ed851713e2584ed5dee11cf079b87ae1b37dc",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d840382_c8408089",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-05T03:56:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e96dfafd_7fcafef1",
+      "revId": "978ed851713e2584ed5dee11cf079b87ae1b37dc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
