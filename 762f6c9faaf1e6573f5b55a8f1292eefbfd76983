@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67237c2a_c443e530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-05T03:55:48Z",
+      "side": 1,
+      "message": "I\u0027ve added a section to the README.md how to build this plugin with Bazel in gerrit tree mode.",
+      "revId": "762f6c9faaf1e6573f5b55a8f1292eefbfd76983",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
