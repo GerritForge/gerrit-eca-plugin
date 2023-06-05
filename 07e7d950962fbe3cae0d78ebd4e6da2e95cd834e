@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8997710a_dc31520f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-05T03:04:47Z",
+      "side": 1,
+      "message": "Done in: [1] for JGit project.\n\n[1]: https://git.eclipse.org/r/c/jgit/jgit/+/201990",
+      "parentUuid": "c9307818_830a3681",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "07e7d950962fbe3cae0d78ebd4e6da2e95cd834e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "617762fb_e7fe15d1",
         "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-04T21:34:55Z",
       "side": 1,
       "message": "Do we want to use a different message here? (e.g. This project does not require Eclipse ECA validation)",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "07e7d950962fbe3cae0d78ebd4e6da2e95cd834e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cfdfe76_85d4723b",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-05T03:04:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t have any visibility to the end user, if no exception is thrown. Still the success message should match the logged message.",
+      "parentUuid": "617762fb_e7fe15d1",
       "range": {
         "startLine": 101,
         "startChar": 13,
