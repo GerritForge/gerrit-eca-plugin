@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10a0987e_a1f260fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-08T19:33:41Z",
+      "side": 1,
+      "message": "Just one nit on logging, feel free to merge when done !\nCan you test it E2E to Verify the change?",
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "269eba6b_d8dcdd66",
@@ -18,6 +35,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "977a6099_acc94a19",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-08T19:33:41Z",
+      "side": 1,
+      "message": "The class name already indicates that this is the EclipseCommitValidationListener, `isEnableForProject` is enough to describe what it does in this context IMHO.",
+      "parentUuid": "269eba6b_d8dcdd66",
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae6d2fea_ede22703",
@@ -31,6 +66,30 @@
       "writtenOn": "2023-06-08T15:57:27Z",
       "side": 1,
       "message": "Why do we need to check if the debug is enabled? Isn\u0027t enough changing the log level to display or not the logged line?",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 28
+      },
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f92cf7b9_ccd3c635",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-08T19:33:41Z",
+      "side": 1,
+      "message": "Alternatively, just move to flogger :-)",
+      "parentUuid": "ae6d2fea_ede22703",
       "range": {
         "startLine": 97,
         "startChar": 10,
@@ -64,6 +123,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75490afe_886bf8b2",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-08T19:33:41Z",
+      "side": 1,
+      "message": "Nope, it s adding only one message.",
+      "parentUuid": "e6984055_0f6c5b4d",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 64
+      },
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "437453b2_147824dd",
@@ -77,6 +160,30 @@
       "writtenOn": "2023-06-08T15:57:27Z",
       "side": 1,
       "message": "What about `isPluginEnabledForProject` or `isECAEnabledForProject`?\nIt seems clearer what the check is about.",
+      "range": {
+        "startLine": 204,
+        "startChar": 18,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b711231_0c59eade",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-08T19:33:41Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "437453b2_147824dd",
       "range": {
         "startLine": 204,
         "startChar": 18,
