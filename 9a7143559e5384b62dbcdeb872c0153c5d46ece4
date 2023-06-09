@@ -189,6 +189,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca38b14e_73f4b0b3",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2023-06-09T06:35:06Z",
+      "side": 1,
+      "message": "True. I mixed up the 2 input parameters. Having singular and plural parameter names in the signature confused me.",
+      "parentUuid": "75490afe_886bf8b2",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 64
+      },
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "437453b2_147824dd",
