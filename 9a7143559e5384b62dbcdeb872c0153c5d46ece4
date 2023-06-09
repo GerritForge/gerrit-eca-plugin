@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8617ad95_def7dd58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-09T05:35:30Z",
+      "side": 1,
+      "message": "I\u0027ve tested E2E locally, and confirm that I\u0027m getting error: my local admin user has not signed Eclipse ECA. Not sure how can I perform positive E2E test locally, though.",
+      "parentUuid": "10a0987e_a1f260fc",
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "269eba6b_d8dcdd66",
         "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
         "patchSetId": 2
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Alternatively, just move to flogger :-)",
       "parentUuid": "ae6d2fea_ede22703",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 28
+      },
+      "revId": "9a7143559e5384b62dbcdeb872c0153c5d46ece4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c61b7d6_631d9e3b",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-09T05:35:30Z",
+      "side": 1,
+      "message": "\u003e Why do we need to check if the debug is enabled? \n\nTo avoid execution of the logging statement, if the debug logging category is disabled.\n\n\u003e Alternatively, just move to flogger :-)\n\nDone in follow-up change 555201.",
+      "parentUuid": "f92cf7b9_ccd3c635",
       "range": {
         "startLine": 97,
         "startChar": 10,

@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69f709c1_dd3221b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-06-09T05:35:30Z",
+      "side": 1,
+      "message": "This change is merged now. But Matthias raised a valid point: can we re-parent all currently imported projects from Eclipse Foundation to one parent, e.g. Eclipse Foundation Parent project or some such?",
+      "parentUuid": "8997710a_dc31520f",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "07e7d950962fbe3cae0d78ebd4e6da2e95cd834e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "617762fb_e7fe15d1",
         "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
         "patchSetId": 1
