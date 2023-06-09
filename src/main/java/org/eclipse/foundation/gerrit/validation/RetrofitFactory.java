@@ -10,6 +10,7 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
+import com.google.common.flogger.FluentLogger;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import java.time.Duration;
@@ -26,13 +27,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.internal.Util;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 final class RetrofitFactory {
-  private static final Logger log = LoggerFactory.getLogger(RetrofitFactory.class);
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   static final String AUTHORIZATION = "Authorization";
 
@@ -49,7 +48,7 @@ final class RetrofitFactory {
                 new HttpLoggingInterceptor.Logger() {
                   @Override
                   public void log(String message) {
-                    log.debug(message);
+                    logger.atFine().log("%s", message);
                   }
                 })
             .setLevel(Level.BASIC);

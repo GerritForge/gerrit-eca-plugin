@@ -9,6 +9,7 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
+import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.annotations.Listen;
 import com.google.gerrit.extensions.annotations.PluginName;
@@ -36,8 +37,6 @@ import okio.BufferedSource;
 import org.eclipse.foundation.gerrit.validation.CommitStatus.CommitStatusMessage;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import retrofit2.Response;
 
 /**
@@ -55,7 +54,7 @@ import retrofit2.Response;
 @Listen
 @Singleton
 public class EclipseCommitValidationListener implements CommitValidationListener {
-  private static final Logger log = LoggerFactory.getLogger(EclipseCommitValidationListener.class);
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private static final String ECA_DOCUMENTATION = "Please see http://wiki.eclipse.org/ECA";
 
   private final APIService apiService;
@@ -94,10 +93,8 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     Project.NameKey project = receiveEvent.project.getNameKey();
     // Check whether or not the validation is enabled for this project
     if (!isEnabledForProject(project)) {
-      if (log.isDebugEnabled()) {
-        log.debug(
-            "Plugin {} is not enabled for project {}: Skip validation", pluginName, project.get());
-      }
+      logger.atFine().log(
+          "Plugin %s is not enabled for project %s: Skip validation", pluginName, project.get());
       return addSuccessMessage(messages, "This project does not require Eclipse ECA validation.");
     }
 
@@ -126,10 +123,7 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     req.commits(Arrays.asList(getRequestCommit(commit, authorIdent, committerIdent)));
     // send the request and await the response from the API
     ValidationRequest requestActual = req.build();
-    // log if enabled
-    if (log.isDebugEnabled()) {
-      log.debug("Request object: {}", requestActual);
-    }
+    logger.atFine().log("Request object: %s", requestActual);
     CompletableFuture<Response<ValidationResponse>> futureResponse =
         this.apiService.validate(requestActual);
     try {
@@ -144,16 +138,13 @@ public class EclipseCommitValidationListener implements CommitValidationListener
             BufferedSource src = err.source()) {
           response = this.responseAdapter.fromJson(src);
         } catch (JsonEncodingException e) {
-          log.error(e.getMessage(), e);
+          logger.atSevere().withCause(e).log("%s", e.getMessage());
           throw new CommitValidationException(
               "An error happened while retrieving validation response, please contact the administrator if this error persists",
               e);
         }
       }
-      // log if enabled
-      if (log.isDebugEnabled()) {
-        log.debug("Response object: {}", response);
-      }
+      logger.atFine().log("Response object: %s", response);
       for (CommitStatus c : response.commits().values()) {
         messages.addAll(
             c.messages().stream()
@@ -171,10 +162,10 @@ public class EclipseCommitValidationListener implements CommitValidationListener
         }
       }
     } catch (IOException | ExecutionException e) {
-      log.error(e.getMessage(), e);
+      logger.atSevere().withCause(e).log("%s", e.getMessage());
       throw new CommitValidationException("An error happened while checking commit", e);
     } catch (InterruptedException e) {
-      log.error(e.getMessage(), e);
+      logger.atSevere().withCause(e).log("%s", e.getMessage());
       Thread.currentThread().interrupt();
       throw new CommitValidationException("Verification of commit has been interrupted", e);
     }
@@ -204,10 +195,9 @@ public class EclipseCommitValidationListener implements CommitValidationListener
   private boolean isEnabledForProject(Project.NameKey project) {
     Optional<ProjectState> projectState = projectCache.get(project);
     if (!projectState.isPresent()) {
-      log.error(
-          "Failed to check if {} is enabled for project {}: Project not found",
-          pluginName,
-          project.get());
+      logger.atSevere().log(
+          "Failed to check if %s is enabled for project %s: Project not found",
+          pluginName, project.get());
       return false;
     }
     return "true"
