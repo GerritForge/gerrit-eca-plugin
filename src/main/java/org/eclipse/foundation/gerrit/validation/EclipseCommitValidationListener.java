@@ -95,7 +95,7 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     if (!isEnabledForProject(project)) {
       logger.atFine().log(
           "Plugin %s is not enabled for project %s: Skip validation", pluginName, project.get());
-      return addSuccessMessage(messages, "This project does not require Eclipse ECA validation.");
+      return messages;
     }
 
     // create the request container
