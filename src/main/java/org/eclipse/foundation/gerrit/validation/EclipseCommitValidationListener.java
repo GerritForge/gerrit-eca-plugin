@@ -13,6 +13,9 @@ import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.annotations.Listen;
 import com.google.gerrit.extensions.annotations.PluginName;
+import com.google.gerrit.server.CurrentUser;
+import com.google.gerrit.server.GerritPersonIdent;
+import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.events.CommitReceivedEvent;
 import com.google.gerrit.server.git.validators.CommitValidationException;
@@ -21,6 +24,7 @@ import com.google.gerrit.server.git.validators.CommitValidationMessage;
 import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonEncodingException;
@@ -62,12 +66,16 @@ public class EclipseCommitValidationListener implements CommitValidationListener
   private final String pluginName;
   private final ProjectCache projectCache;
   private final PluginConfigFactory pluginCfgFactory;
+  private final Provider<PersonIdent> serverIdentProvider;
+  private final Provider<CurrentUser> currentUserProvider;
 
   @Inject
   public EclipseCommitValidationListener(
       @PluginName String pluginName,
       ProjectCache projectCache,
-      PluginConfigFactory pluginCfgFactory) {
+      PluginConfigFactory pluginCfgFactory,
+      @GerritPersonIdent Provider<PersonIdent> serverIdentProvider,
+      Provider<CurrentUser> currentUserProvider) {
     RetrofitFactory retrofitFactory = new RetrofitFactory();
     this.apiService = retrofitFactory.newService(APIService.BASE_URL, APIService.class);
     Optional<JsonAdapter<ValidationResponse>> adapter =
@@ -79,6 +87,8 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     this.pluginName = pluginName;
     this.projectCache = projectCache;
     this.pluginCfgFactory = pluginCfgFactory;
+    this.serverIdentProvider = serverIdentProvider;
+    this.currentUserProvider = currentUserProvider;
   }
 
   /**
@@ -120,7 +130,14 @@ public class EclipseCommitValidationListener implements CommitValidationListener
             false));
     addEmptyLine(messages);
     // update the commit list for the request to contain the current request
-    req.commits(Arrays.asList(getRequestCommit(commit, authorIdent, committerIdent)));
+    req.commits(
+        Arrays.asList(
+            getRequestCommit(
+                commit,
+                authorIdent,
+                isGerritServerIdent(committerIdent)
+                    ? personIdentOnBehalfOfCurrentUser(committerIdent)
+                    : committerIdent)));
     // send the request and await the response from the API
     ValidationRequest requestActual = req.build();
     logger.atFine().log("Request object: %s", requestActual);
@@ -177,6 +194,21 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     }
 
     return addSuccessMessage(messages, "This commit passes Eclipse validation.");
+  }
+
+  private PersonIdent personIdentOnBehalfOfCurrentUser(PersonIdent committerIdent) {
+    IdentifiedUser currentUser = currentUserProvider.get().asIdentifiedUser();
+    return new PersonIdent(
+        currentUser.getName(),
+        currentUser.getAccount().preferredEmail(),
+        committerIdent.getWhen(),
+        committerIdent.getTimeZone());
+  }
+
+  private boolean isGerritServerIdent(PersonIdent committerIdent) {
+    PersonIdent gerritServerIdent = serverIdentProvider.get();
+    return gerritServerIdent.getName().equalsIgnoreCase(committerIdent.getName())
+        && gerritServerIdent.getEmailAddress().equalsIgnoreCase(committerIdent.getEmailAddress());
   }
 
   private static List<CommitValidationMessage> addSuccessMessage(
