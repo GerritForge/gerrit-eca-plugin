@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fd9ab95_5b80ec8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000671
+      },
+      "writtenOn": "2023-11-29T22:44:40Z",
+      "side": 1,
+      "message": "Shouldn\u0027t already gerrit core use the identity of the user initiating the revert in the UI ? The difference to an auto-merge on submit is that auto-merge on submit is in some way implicit and changes created in the UI are subject to review.",
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
