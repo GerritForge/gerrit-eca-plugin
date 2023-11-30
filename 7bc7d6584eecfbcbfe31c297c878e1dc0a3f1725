@@ -16,6 +16,41 @@
       "message": "Shouldn\u0027t already gerrit core use the identity of the user initiating the revert in the UI ? The difference to an auto-merge on submit is that auto-merge on submit is in some way implicit and changes created in the UI are subject to review.",
       "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4977034_bf927ad2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-30T00:15:11Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t already gerrit core use the identity of the user initiating the revert in the UI ? The difference to an auto-merge on submit is that auto-merge on submit is in some way implicit and changes created in the UI are subject to review.\n\nI thought the same actually when drafting this fix on the ECA plugin: the Gerrit server should perform the operation *on behalf* of the user clicking the button on the UI, exactly as the rebase button.\n\nI could be implemented in Gerrit core on master, which is fine as long as you guys can find a workaround in the meantime 😊\n\nIt could just be asking the Eclipse Foundation to allow GerritHub as committer on their backend.",
+      "parentUuid": "9fd9ab95_5b80ec8c",
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12832f3c_afd47f5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-30T00:15:11Z",
+      "side": 1,
+      "message": "Adding also David, who has worked recently on this plugin.",
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
