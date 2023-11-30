@@ -61,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f1761c2_5fbe7257",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-11-30T06:44:28Z",
+      "side": 1,
+      "message": "I missed to add the link to rebace category configuration documentation in my previous comment: [1].\n\n[1]: https://gerrit-review.googlesource.com/Documentation/access-control.html#category_rebase",
+      "parentUuid": "70d9a0a7_b9d21ed4",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4231fe6_a385def4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
