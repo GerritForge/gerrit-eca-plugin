@@ -36,6 +36,52 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d9a0a7_b9d21ed4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-11-30T06:42:58Z",
+      "side": 1,
+      "message": "We should be careful and try to prevent spam. Because, now, anyone, who can see the change would be able to click the Revert button on the UI and revert the change on behalf of the committer. Should we activate this ACL then for JGit and EGit projects?\n\n[1]: https://gerrit-review.googlesource.com/Documentation/access-control.html#category_rebase",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4231fe6_a385def4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-11-30T06:42:58Z",
+      "side": 1,
+      "message": "I think this is not needed, because the plugin would have the same issue if gerrit version on https://git.eclipse.org/r would be updated to Gerrit@HEAD, right? So that this fix is needed anyway.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "12832f3c_afd47f5c",
@@ -49,6 +95,23 @@
       "writtenOn": "2023-11-30T00:15:11Z",
       "side": 1,
       "message": "Adding also David, who has worked recently on this plugin.",
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc1984b8_4e810cbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2023-11-30T06:42:58Z",
+      "side": 1,
+      "message": "@luca.milanesio@gmail.com Why I don\u0027t have CRVW+2 on this project?",
       "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
