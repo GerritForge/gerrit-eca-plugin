@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7858376e_4053adba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-30T08:43:04Z",
+      "side": 1,
+      "message": "\u003e Because, now, anyone, who can see the change would be able to click the Revert button on the UI and revert the change on behalf of the committer.\n\nNo, actually my fix uses the identity of the user that clicks the \"Revert\" button: that use must have signed the Eclipse ECA. Yes, it can be used by SPAM-ers that have signed the ECA, but that can happen with any change.",
+      "parentUuid": "2f1761c2_5fbe7257",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4231fe6_a385def4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -96,6 +120,30 @@
       "writtenOn": "2023-11-30T06:42:58Z",
       "side": 1,
       "message": "I think this is not needed, because the plugin would have the same issue if gerrit version on https://git.eclipse.org/r would be updated to Gerrit@HEAD, right? So that this fix is needed anyway.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28187ba2_f026d209",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-30T08:43:04Z",
+      "side": 1,
+      "message": "\u003e I think this is not needed, because the plugin would have the same issue if gerrit version on https://git.eclipse.org/r would be updated to Gerrit@HEAD, right? So that this fix is needed anyway.\n\nThat\u0027s a good question ideed, @matthias.sohn@sap.com do you have any clue on how was it working on https://git.eclipse.org/r?",
+      "parentUuid": "e4231fe6_a385def4",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -136,6 +184,24 @@
       "writtenOn": "2023-11-30T06:42:58Z",
       "side": 1,
       "message": "@luca.milanesio@gmail.com Why I don\u0027t have CRVW+2 on this project?",
+      "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bbf9d84_0181ea31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-30T08:43:04Z",
+      "side": 1,
+      "message": "\u003e @luca.milanesio@gmail.com Why I don\u0027t have CRVW+2 on this project?\n\nThis isn\u0027t a GerritForge\u0027s project but rather an Eclipse one, so I\u0027ve added @matthias.sohn@sap.com as project maintainer and he can elect other people to CRVW+2, including you 😊\n\nAlternatively, this can be moved back to the eclipse foundation root and continue to review it on GerritHub but maintained by the foundation.",
+      "parentUuid": "fc1984b8_4e810cbd",
       "revId": "7bc7d6584eecfbcbfe31c297c878e1dc0a3f1725",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
