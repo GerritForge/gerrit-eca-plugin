@@ -57,7 +57,7 @@ abstract class BaseEclipseCommitValidator {
     // create the request container
     ValidationRequest.Builder req = ValidationRequest.builder();
     req.repoUrl(project.toString());
-    req.provider("gerrit");
+    req.provider("github");
     req.strictMode(true);
     req.commits(Collections.singletonList(getRequestCommit(commit, authorIdent, committerIdent)));
 
