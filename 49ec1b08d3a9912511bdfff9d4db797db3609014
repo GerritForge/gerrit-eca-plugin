@@ -47,6 +47,54 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d70cb3a2_8e48ddba",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T17:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226c23f0_40744e37",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1b99d97_27f301f1",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T17:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22efe872_ca77596a",
+      "range": {
+        "startLine": 31,
+        "startChar": 75,
+        "endLine": 31,
+        "endChar": 96
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdce9ae9_eb9be937",
@@ -70,6 +118,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de3e3e7b_9d3f3d0c",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T17:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdce9ae9_eb9be937",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a65b7e1b_bc752946",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-07-04T16:55:22Z",
       "side": 1,
       "message": "These aren\u0027t needed as we don\u0027t really need to return a `SubmitRecord` here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e1b3542_d424fd41",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T17:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65b7e1b_bc752946",
       "range": {
         "startLine": 78,
         "startChar": 0,
