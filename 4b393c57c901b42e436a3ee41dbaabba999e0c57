@@ -22,6 +22,30 @@
       },
       "revId": "4b393c57c901b42e436a3ee41dbaabba999e0c57",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e7eb02f_f669b567",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/BaseEclipseCommitValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T22:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18218a25_2f5717b5",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "4b393c57c901b42e436a3ee41dbaabba999e0c57",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
