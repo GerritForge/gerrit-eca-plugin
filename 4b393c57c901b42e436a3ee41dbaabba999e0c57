@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18218a25_2f5717b5",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/BaseEclipseCommitValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T21:48:53Z",
+      "side": 1,
+      "message": "It would be best to mention Issue 14 and merge request 224 to explain why `github` is used instead of `gerrit` here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "4b393c57c901b42e436a3ee41dbaabba999e0c57",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
