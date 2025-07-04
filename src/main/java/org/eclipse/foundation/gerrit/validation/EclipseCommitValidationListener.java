@@ -152,10 +152,10 @@ public class EclipseCommitValidationListener implements CommitValidationListener
                     message ->
                         new CommitValidationMessage(
                             message.message(),
-                            message.code() < 0 && shouldEnforceStrict(response, requestActual)))
+                            message.code() < 0 && response.trackedProject()))
                 .collect(Collectors.toList()));
         addEmptyLine(messages);
-        if (response.errorCount() > 0 && shouldEnforceStrict(response, requestActual)) {
+        if (response.errorCount() > 0 && response.trackedProject()) {
           errors.addAll(
               c.errors().stream().map(CommitStatusMessage::message).collect(Collectors.toList()));
           errors.add("An Eclipse Contributor Agreement is required.");
@@ -243,11 +243,6 @@ public class EclipseCommitValidationListener implements CommitValidationListener
     c.author(authorGit.build());
     c.committer(committerGit.build());
     return c.build();
-  }
-
-  private static boolean shouldEnforceStrict(
-      ValidationResponse response, ValidationRequest request) {
-    return response.trackedProject() || request.strictMode();
   }
 
   private static void addSeparatorLine(List<CommitValidationMessage> messages) {
