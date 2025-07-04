@@ -57,7 +57,9 @@ abstract class BaseEclipseCommitValidator {
     // create the request container
     ValidationRequest.Builder req = ValidationRequest.builder();
     req.repoUrl(project.toString());
-    req.provider("gerrit");
+    // See https://gitlab.eclipse.org/eclipsefdn/it/api/git-eca-rest-api/-/merge_requests/224/diffs
+    // where the 'gerrit' provider has been removed.
+    req.provider("github");
     req.strictMode(true);
     req.commits(Collections.singletonList(getRequestCommit(commit, authorIdent, committerIdent)));
 
