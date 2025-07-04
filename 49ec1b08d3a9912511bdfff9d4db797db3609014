@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22efe872_ca77596a",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T16:55:22Z",
+      "side": 1,
+      "message": "This isn\u0027t needed as we only care about providing the results of the ECA API evaluation. We won\u0027t use it as a custom submit rule.",
+      "range": {
+        "startLine": 31,
+        "startChar": 75,
+        "endLine": 31,
+        "endChar": 96
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226c23f0_40744e37",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T16:55:22Z",
+      "side": 1,
+      "message": "Maybe this whole class logic can be inlined into the ECASignedHasPredicate class.",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdce9ae9_eb9be937",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T16:55:22Z",
+      "side": 1,
+      "message": "This `SubmitRecord` is not needed: we only need to say if the ECA validation passed or not, and the error in case it failed.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a65b7e1b_bc752946",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/ECASignedSubmitRequirement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-04T16:55:22Z",
+      "side": 1,
+      "message": "These aren\u0027t needed as we don\u0027t really need to return a `SubmitRecord` here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "49ec1b08d3a9912511bdfff9d4db797db3609014",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
