@@ -8,6 +8,7 @@ gerrit_plugin(
         "Implementation-Title: Eclipse ECA validation",
         "Implementation-URL: https://review.gerrithub.io/admin/repos/GerritForge/gerrit-eca-plugin",
         "Gerrit-PluginName: eca-validation",
+        "Gerrit-Module: org.eclipse.foundation.gerrit.validation.ECAValidationModule",
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [

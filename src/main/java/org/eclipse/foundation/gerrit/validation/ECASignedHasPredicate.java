@@ -1,0 +1,66 @@
+// Copyright (C) 2025 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package org.eclipse.foundation.gerrit.validation;
+
+import com.google.gerrit.entities.SubmitRecord;
+import com.google.gerrit.extensions.annotations.PluginName;
+import com.google.gerrit.server.project.SubmitRequirementEvaluationException;
+import com.google.gerrit.server.query.change.ChangeData;
+import com.google.gerrit.server.query.change.SubmitRequirementPredicate;
+import com.google.gerrit.server.rules.SubmitRule;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import java.util.Optional;
+
+/**
+ * A predicate that checks if a signed Eclipse Contributor Agreement. This predicate wraps the
+ * existing {@link ECASignedSubmitRequirement} (that implements the {@link SubmitRule}) to perform
+ * the logic.
+ */
+@Singleton
+class ECASignedHasPredicate extends SubmitRequirementPredicate {
+
+  private final ECASignedSubmitRequirement ecaSignedSubmitRequirement;
+
+  @Inject
+  ECASignedHasPredicate(
+      @PluginName String pluginName, ECASignedSubmitRequirement ownersSubmitRequirement) {
+    super("has", ECASignedHasOperand.OPERAND + "_" + pluginName);
+    this.ecaSignedSubmitRequirement = ownersSubmitRequirement;
+  }
+
+  @Override
+  public boolean match(ChangeData cd) {
+    Optional<SubmitRecord> submitRecord = ecaSignedSubmitRequirement.evaluate(cd);
+    return submitRecord
+        .map(
+            sr -> {
+              if (sr.status == SubmitRecord.Status.RULE_ERROR) {
+                throw new SubmitRequirementEvaluationException(sr.errorMessage);
+              }
+              return sr.status == SubmitRecord.Status.OK;
+            })
+        .orElse(true);
+  }
+
+  /**
+   * Assuming that it is similarly expensive to calculate this as the 'code-owners' plugin hence
+   * giving the same value.
+   */
+  @Override
+  public int getCost() {
+    return 10;
+  }
+}
