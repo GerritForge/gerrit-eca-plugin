@@ -18,5 +18,6 @@ public class ECAValidationModule extends AbstractModule {
   protected void configure() {
     DynamicSet.bind(binder(), CommitValidationListener.class)
         .to(EclipseCommitValidationListener.class);
+    install(new ECASignedHasOperand.ECASignedHasOperandModule());
   }
 }
