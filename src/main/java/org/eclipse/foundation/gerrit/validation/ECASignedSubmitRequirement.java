@@ -14,6 +14,8 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.Change;
 import com.google.gerrit.entities.Project;
+import com.google.gerrit.extensions.annotations.PluginName;
+import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.git.GitRepositoryManager;
 import com.google.gerrit.server.git.validators.CommitValidationException;
 import com.google.gerrit.server.query.change.ChangeData;
@@ -30,7 +32,11 @@ public class ECASignedSubmitRequirement extends BaseEclipseCommitValidator {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Inject
-  public ECASignedSubmitRequirement(GitRepositoryManager repoManager) {
+  public ECASignedSubmitRequirement(
+      GitRepositoryManager repoManager,
+      PluginConfigFactory pluginConfigFactory,
+      @PluginName String pluginName) {
+    super(pluginConfigFactory, pluginName);
     this.repoManager = repoManager;
   }
 
