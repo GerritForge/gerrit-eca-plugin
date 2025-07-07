@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc5eb2a_21a1cb02",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/BaseEclipseCommitValidator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-07T16:36:21Z",
+      "side": 1,
+      "message": "Is this the simple HTTP-level timeout or the end-to-end timeout waiting for the API response?\n\nThe OkHttp documentation says: _\"The call timeout spans the entire call: resolving DNS, connecting, writing the request body, server processing, and reading the response body. If the call requires redirects or retries all must complete within one timeout period.\"_\n\n```suggestion\n              .getInt(\"apiTimeout\", DEFAULT_HTTP_CLIENT_TIMEOUT_SECS);\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "b326dfea9797ace8cd7e0ff9133d30aae816fac3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30708bd_77a9b1da",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-07T16:36:21Z",
+      "side": 1,
+      "message": "```suggestion\n`plugin.@PLUGIN@.apiTimeout`: Define client timeout in seconds waiting for the whole ECA API to return its results. Default `20` seconds.\n```",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 97
+      },
+      "revId": "b326dfea9797ace8cd7e0ff9133d30aae816fac3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "960cd0c0_1e249a3f",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-07T16:36:21Z",
+      "side": 1,
+      "message": "```suggestion\n    apiTimeout \u003d 30\n```",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "b326dfea9797ace8cd7e0ff9133d30aae816fac3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
