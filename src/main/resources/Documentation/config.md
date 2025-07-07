@@ -22,6 +22,17 @@ file the value is inherited from the parent project. If it is not
 set on any parent project the ECA validation is disabled for this
 project.
 
+### HTTP client configuration
+
+`plugin.@PLUGIN@.apiTimeout`: Define ECA API timeout in seconds. Default `20` seconds.
+
+Example:
+
+```ini
+  [plugin "@PLUGIN@"]
+    apiTimeout = 30
+```
+
 ### Submit requirement
 
 The plugin exposes a custom operand `has:signed_eca-validation`, which can be used in submit

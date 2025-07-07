@@ -47,18 +47,15 @@ public class EclipseCommitValidationListener extends BaseEclipseCommitValidator
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private static final String ECA_DOCUMENTATION = "Please see http://wiki.eclipse.org/ECA";
 
-  private final String pluginName;
   private final ProjectCache projectCache;
-  private final PluginConfigFactory pluginCfgFactory;
 
   @Inject
   public EclipseCommitValidationListener(
       @PluginName String pluginName,
       ProjectCache projectCache,
       PluginConfigFactory pluginCfgFactory) {
-    this.pluginName = pluginName;
+    super(pluginCfgFactory, pluginName);
     this.projectCache = projectCache;
-    this.pluginCfgFactory = pluginCfgFactory;
   }
 
   /**
