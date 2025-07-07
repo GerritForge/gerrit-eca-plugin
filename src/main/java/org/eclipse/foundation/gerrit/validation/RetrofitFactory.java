@@ -35,15 +35,16 @@ final class RetrofitFactory {
 
   static final String AUTHORIZATION = "Authorization";
 
-  private final OkHttpClient client;
   private final MoshiConverterFactory moshiConverterFactory;
   private final Moshi moshi;
+
+  private final HttpLoggingInterceptor loggingInterceptor;
 
   RetrofitFactory() {
     this.moshi = new Moshi.Builder().add(JsonAdapterFactory.create()).build();
     this.moshiConverterFactory = MoshiConverterFactory.create(this.moshi);
 
-    HttpLoggingInterceptor loggingInterceptor =
+    this.loggingInterceptor =
         new HttpLoggingInterceptor(
                 new HttpLoggingInterceptor.Logger() {
                   @Override
@@ -52,11 +53,13 @@ final class RetrofitFactory {
                   }
                 })
             .setLevel(Level.BASIC);
-    loggingInterceptor.redactHeader(AUTHORIZATION);
+    this.loggingInterceptor.redactHeader(AUTHORIZATION);
+  }
 
-    this.client =
+  private Retrofit newRetrofit(HttpUrl baseUrl, int httpClientTimeout) {
+    OkHttpClient client =
         new OkHttpClient.Builder()
-            .callTimeout(Duration.ofSeconds(5))
+            .callTimeout(Duration.ofSeconds(httpClientTimeout))
             .dispatcher(
                 new Dispatcher(
                     new ThreadPoolExecutor(
@@ -71,19 +74,17 @@ final class RetrofitFactory {
             // TLS_1_0)
             .connectionSpecs(Arrays.asList(ConnectionSpec.COMPATIBLE_TLS, ConnectionSpec.CLEARTEXT))
             .build();
-  }
 
-  private Retrofit newRetrofit(HttpUrl baseUrl) {
     return new Retrofit.Builder()
         .baseUrl(baseUrl)
         .callbackExecutor(Executors.newSingleThreadExecutor())
         .addConverterFactory(this.moshiConverterFactory)
-        .client(this.client)
+        .client(client)
         .build();
   }
 
-  public <T> T newService(HttpUrl baseUrl, Class<T> serviceClass) {
-    return newRetrofit(baseUrl).create(serviceClass);
+  public <T> T newService(HttpUrl baseUrl, int httpClientTimeout, Class<T> serviceClass) {
+    return newRetrofit(baseUrl, httpClientTimeout).create(serviceClass);
   }
 
   /**
