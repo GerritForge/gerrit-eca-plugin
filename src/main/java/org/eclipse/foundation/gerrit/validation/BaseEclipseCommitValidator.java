@@ -11,7 +11,10 @@ package org.eclipse.foundation.gerrit.validation;
 
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.Project;
+import com.google.gerrit.extensions.annotations.PluginName;
+import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.git.validators.CommitValidationException;
+import com.google.gerrit.server.project.NoSuchProjectException;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonEncodingException;
 import java.io.IOException;
@@ -29,13 +32,18 @@ import retrofit2.Response;
 
 abstract class BaseEclipseCommitValidator {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private static final int DEFAULT_HTTP_CLIENT_TIMEOUT_SECS = 20;
 
-  private final APIService apiService;
+  final String pluginName;
   private final JsonAdapter<ValidationResponse> responseAdapter;
+  final PluginConfigFactory pluginCfgFactory;
+  private final RetrofitFactory retrofitFactory;
 
-  public BaseEclipseCommitValidator() {
-    RetrofitFactory retrofitFactory = new RetrofitFactory();
-    this.apiService = retrofitFactory.newService(APIService.BASE_URL, APIService.class);
+  public BaseEclipseCommitValidator(
+      PluginConfigFactory pluginCfgFactory, @PluginName String pluginName) {
+    this.pluginCfgFactory = pluginCfgFactory;
+    this.pluginName = pluginName;
+    this.retrofitFactory = new RetrofitFactory();
     Optional<JsonAdapter<ValidationResponse>> adapter =
         retrofitFactory.adapter(ValidationResponse.class);
     if (adapter.isEmpty()) {
@@ -67,9 +75,17 @@ abstract class BaseEclipseCommitValidator {
     ValidationRequest requestActual = req.build();
     logger.atFine().log("Request object: %s", requestActual);
 
-    CompletableFuture<Response<ValidationResponse>> futureResponse =
-        this.apiService.validate(requestActual);
     try {
+      int httpClientTimeout =
+          pluginCfgFactory
+              .getFromProjectConfigWithInheritance(project, pluginName)
+              .getInt("httpClientTimeout", DEFAULT_HTTP_CLIENT_TIMEOUT_SECS);
+
+      APIService apiService =
+          retrofitFactory.newService(APIService.BASE_URL, httpClientTimeout, APIService.class);
+
+      CompletableFuture<Response<ValidationResponse>> futureResponse =
+          apiService.validate(requestActual);
       Response<ValidationResponse> rawResponse = futureResponse.get();
       ValidationResponse response;
       // handle error responses (okhttp doesn't assume error types)
@@ -96,6 +112,8 @@ abstract class BaseEclipseCommitValidator {
       logger.atSevere().withCause(e).log("%s", e.getMessage());
       Thread.currentThread().interrupt();
       throw new CommitValidationException("Verification of commit has been interrupted", e);
+    } catch (NoSuchProjectException e) {
+      throw new CommitValidationException("Cannot find project " + project, e);
     }
   }
 
