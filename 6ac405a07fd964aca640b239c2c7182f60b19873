@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c779070_afe85cc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2025-07-07T16:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3006db85_2332dfb5",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "6ac405a07fd964aca640b239c2c7182f60b19873",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c9535ab_699f39f8",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-07-07T16:01:16Z",
       "side": 1,
       "message": "nit: consider extracting in a final `DEFAULT_HTTP_CLIENT_TIMEOUT_SECS`",
+      "range": {
+        "startLine": 81,
+        "startChar": 43,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "6ac405a07fd964aca640b239c2c7182f60b19873",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccba4073_76bfb4ca",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/BaseEclipseCommitValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2025-07-07T16:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9535ab_699f39f8",
       "range": {
         "startLine": 81,
         "startChar": 43,
