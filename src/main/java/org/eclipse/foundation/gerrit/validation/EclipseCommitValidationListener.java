@@ -91,21 +91,27 @@ public class EclipseCommitValidationListener extends BaseEclipseCommitValidator
                 "Authored by: %1$s <%2$s>", authorIdent.getName(), authorIdent.getEmailAddress()),
             false));
     addEmptyLine(messages);
-    ValidationResponse response = validate(project, authorIdent, committerIdent, commit);
-    for (CommitStatus c : response.commits().values()) {
-      messages.addAll(
-          c.messages().stream()
-              .map(
-                  message ->
-                      new CommitValidationMessage(
-                          message.message(), message.code() < 0 && response.trackedProject()))
-              .collect(Collectors.toList()));
-      addEmptyLine(messages);
-      if (response.errorCount() > 0 && response.trackedProject()) {
-        errors.addAll(
-            c.errors().stream().map(CommitStatusMessage::message).collect(Collectors.toList()));
-        errors.add("An Eclipse Contributor Agreement is required.");
+    ValidationResponse response;
+    try {
+      response = validate(project, authorIdent, committerIdent, commit);
+      for (CommitStatus c : response.commits().values()) {
+        messages.addAll(
+            c.messages().stream()
+                .map(
+                    message ->
+                        new CommitValidationMessage(
+                            message.message(), message.code() < 0 && response.trackedProject()))
+                .collect(Collectors.toList()));
+        addEmptyLine(messages);
+        if (response.errorCount() > 0 && response.trackedProject()) {
+
+          errors.addAll(
+              c.errors().stream().map(CommitStatusMessage::message).collect(Collectors.toList()));
+          errors.add("An Eclipse Contributor Agreement is required.");
+        }
       }
+    } catch (CommitValidationException cve) {
+      errors.add(cve.getMessage());
     }
 
     // TODO Extend exception-throwing delegation to include all possible messages.
