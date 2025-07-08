@@ -105,11 +105,13 @@ abstract class BaseEclipseCommitValidator {
       return response;
     } catch (IOException | ExecutionException e) {
       logger.atSevere().withCause(e).log("%s", e.getMessage());
-      throw new CommitValidationException("An error happened while checking commit", e);
+      throw new CommitValidationException(
+          "An error happened while checking commit: " + e.getMessage(), e);
     } catch (InterruptedException e) {
       logger.atSevere().withCause(e).log("%s", e.getMessage());
       Thread.currentThread().interrupt();
-      throw new CommitValidationException("Verification of commit has been interrupted", e);
+      throw new CommitValidationException(
+          "Verification of commit has been interrupted: " + e.getMessage(), e);
     } catch (NoSuchProjectException e) {
       throw new CommitValidationException("Cannot find project " + project, e);
     }
