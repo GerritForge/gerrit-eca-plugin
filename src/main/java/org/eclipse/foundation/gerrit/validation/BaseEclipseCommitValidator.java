@@ -14,6 +14,7 @@ import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.git.validators.CommitValidationException;
+import com.google.gerrit.server.git.validators.CommitValidationMessage;
 import com.google.gerrit.server.project.NoSuchProjectException;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonEncodingException;
@@ -105,13 +106,22 @@ abstract class BaseEclipseCommitValidator {
       return response;
     } catch (IOException | ExecutionException e) {
       logger.atSevere().withCause(e).log("%s", e.getMessage());
-      throw new CommitValidationException("An error happened while checking commit", e);
+      throw new CommitValidationException(
+          "An error happened while checking commit",
+          new CommitValidationMessage(e.getMessage(), true),
+          e);
     } catch (InterruptedException e) {
       logger.atSevere().withCause(e).log("%s", e.getMessage());
       Thread.currentThread().interrupt();
-      throw new CommitValidationException("Verification of commit has been interrupted", e);
+      throw new CommitValidationException(
+          "Verification of commit has been interrupted",
+          new CommitValidationMessage(e.getMessage(), true),
+          e);
     } catch (NoSuchProjectException e) {
-      throw new CommitValidationException("Cannot find project " + project, e);
+      throw new CommitValidationException(
+          "No such project",
+          new CommitValidationMessage("Cannot find project " + project, true),
+          e);
     }
   }
 
