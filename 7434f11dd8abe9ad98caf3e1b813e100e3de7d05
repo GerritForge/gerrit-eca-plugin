@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9be706e_a39bd622",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2025-07-08T17:03:38Z",
+      "side": 1,
+      "message": "I am not sure this is the right way to expose the message.\nthe `validate` method might throw `CommitValidationExceptin` constructed as such [1]\n\n```\nthrow new CommitValidationException(\"An error happened while checking commit\", e);\nthrow new CommitValidationException(\"Verification of commit has been interrupted\", e);\nthrow new CommitValidationException(\"Cannot find project \" + project, e);\n```\n\nThis way of constructing the exception does not set `messages` [2].\n\n```\n  public CommitValidationException(String reason, Throwable why) {\n    super(reason, why);\n    this.messages \u003d ImmutableList.of();\n  }\n```\n\nShould we construct the exceptions through a constructor that sets the `messages`? such as:\n```\n  public CommitValidationException(String reason, CommitValidationMessage message, Throwable why) {\n    super(reason, why);\n    this.messages \u003d ImmutableList.of(message);\n  }\n ``` \n\n\n[1] https://github.com/GerritForge/gerrit-eca-plugin/blob/master/src/main/java/org/eclipse/foundation/gerrit/validation/BaseEclipseCommitValidator.java#L108\n\n[2] https://gerrit.googlesource.com/gerrit/+/refs/heads/stable-3.10/java/com/google/gerrit/server/git/validators/CommitValidationException.java#52",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "7434f11dd8abe9ad98caf3e1b813e100e3de7d05",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
