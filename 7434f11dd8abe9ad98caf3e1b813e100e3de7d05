@@ -22,6 +22,30 @@
       },
       "revId": "7434f11dd8abe9ad98caf3e1b813e100e3de7d05",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dde801c9_33c1268e",
+        "filename": "src/main/java/org/eclipse/foundation/gerrit/validation/EclipseCommitValidationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2025-07-09T12:37:24Z",
+      "side": 1,
+      "message": "Turns out the error is already passed to the client. We just needed to enrich it with more information.",
+      "parentUuid": "a9be706e_a39bd622",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "7434f11dd8abe9ad98caf3e1b813e100e3de7d05",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
