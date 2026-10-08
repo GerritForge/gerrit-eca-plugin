@@ -16,113 +16,126 @@ import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.git.validators.CommitValidationException;
 import com.google.gerrit.server.git.validators.CommitValidationMessage;
 import com.google.gerrit.server.project.NoSuchProjectException;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.JsonEncodingException;
-import java.io.IOException;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import okhttp3.ResponseBody;
-import okio.BufferedSource;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
-import retrofit2.Response;
 
 abstract class BaseEclipseCommitValidator {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private static final int DEFAULT_API_TIMEOUT_SECS = 20;
+  private static final URI ECA_VALIDATION_URI = URI.create("https://api.eclipse.org/git/eca");
 
   final String pluginName;
-  private final JsonAdapter<ValidationResponse> responseAdapter;
   final PluginConfigFactory pluginCfgFactory;
-  private final RetrofitFactory retrofitFactory;
+  private final Gson gson = new Gson();
+  private final HttpClient httpClient = HttpClient.newHttpClient();
 
-  public BaseEclipseCommitValidator(
-      PluginConfigFactory pluginCfgFactory, @PluginName String pluginName) {
+  BaseEclipseCommitValidator(PluginConfigFactory pluginCfgFactory, @PluginName String pluginName) {
     this.pluginCfgFactory = pluginCfgFactory;
     this.pluginName = pluginName;
-    this.retrofitFactory = new RetrofitFactory();
-    Optional<JsonAdapter<ValidationResponse>> adapter =
-        retrofitFactory.adapter(ValidationResponse.class);
-    if (adapter.isEmpty()) {
-      throw new IllegalStateException("Cannot process validation responses, not continuing");
-    }
-    this.responseAdapter = adapter.get();
   }
 
   /**
    * Validate a single commit (this listener will be invoked for each commit in a push operation).
+   *
+   * <p>Fails closed: network errors, timeouts and malformed responses raise {@link
+   * CommitValidationException}.
    */
-  public ValidationResponse validate(
+  ValidationResponse validate(
       Project.NameKey project,
       PersonIdent authorIdent,
       PersonIdent committerIdent,
       RevCommit commit)
       throws CommitValidationException {
+    ValidationRequest request =
+        new ValidationRequest(
+            project.toString(),
+            List.of(getRequestCommit(commit, authorIdent, committerIdent)),
+            "gerrit",
+            /* strictMode= */ true);
+    logger.atFine().log("Request object: %s", request);
 
-    // create the request container
-    ValidationRequest.Builder req = ValidationRequest.builder();
-    req.repoUrl(project.toString());
-    req.provider("gerrit");
-    req.strictMode(true);
-    req.commits(Collections.singletonList(getRequestCommit(commit, authorIdent, committerIdent)));
-
-    // send the request and await the response from the API
-    ValidationRequest requestActual = req.build();
-    logger.atFine().log("Request object: %s", requestActual);
-
+    int apiTimeout;
     try {
-      int apiTimeout =
+      apiTimeout =
           pluginCfgFactory
               .getFromProjectConfigWithInheritance(project, pluginName)
               .getInt("apiTimeout", DEFAULT_API_TIMEOUT_SECS);
-
-      APIService apiService =
-          retrofitFactory.newService(APIService.BASE_URL, apiTimeout, APIService.class);
-
-      CompletableFuture<Response<ValidationResponse>> futureResponse =
-          apiService.validate(requestActual);
-      Response<ValidationResponse> rawResponse = futureResponse.get();
-      ValidationResponse response;
-      // handle error responses (okhttp doesn't assume error types)
-      if (rawResponse.isSuccessful()) {
-        response = rawResponse.body();
-      } else {
-        // auto close the response resources after fetching
-        try (ResponseBody err = futureResponse.get().errorBody();
-            BufferedSource src = err.source()) {
-          response = this.responseAdapter.fromJson(src);
-        } catch (JsonEncodingException e) {
-          logger.atSevere().withCause(e).log("%s", e.getMessage());
-          throw new CommitValidationException(
-              "An error happened while retrieving validation response, please contact the administrator if this error persists",
-              e);
-        }
-      }
-      logger.atFine().log("Response object: %s", response);
-      return response;
-    } catch (IOException | ExecutionException e) {
-      logger.atSevere().withCause(e).log("%s", e.getMessage());
-      throw new CommitValidationException(
-          "An error happened while checking commit",
-          new CommitValidationMessage(e.getMessage(), true),
-          e);
-    } catch (InterruptedException e) {
-      logger.atSevere().withCause(e).log("%s", e.getMessage());
-      Thread.currentThread().interrupt();
-      throw new CommitValidationException(
-          "Verification of commit has been interrupted",
-          new CommitValidationMessage(e.getMessage(), true),
-          e);
     } catch (NoSuchProjectException e) {
       throw new CommitValidationException(
           "No such project",
           new CommitValidationMessage("Cannot find project " + project, true),
           e);
     }
+
+    HttpRequest httpRequest =
+        HttpRequest.newBuilder(ECA_VALIDATION_URI)
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request), StandardCharsets.UTF_8))
+            .build();
+
+    // overall deadline (connect, headers, body); <= 0 uses the default.
+    int deadlineSecs = apiTimeout > 0 ? apiTimeout : DEFAULT_API_TIMEOUT_SECS;
+    CompletableFuture<HttpResponse<String>> future =
+        httpClient.sendAsync(
+            httpRequest, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+    HttpResponse<String> httpResponse;
+    try {
+      httpResponse = future.get(deadlineSecs, TimeUnit.SECONDS);
+    } catch (TimeoutException e) {
+      future.cancel(true);
+      logger.atSevere().withCause(e).log("ECA validation timed out after %ss", deadlineSecs);
+      throw new CommitValidationException(
+          "Verification of the commit timed out",
+          new CommitValidationMessage("ECA validation timed out after " + deadlineSecs + "s", true),
+          e);
+    } catch (ExecutionException e) {
+      logger.atSevere().withCause(e).log("%s", e.getMessage());
+      Throwable cause = e.getCause() != null ? e.getCause() : e;
+      throw new CommitValidationException(
+          "An error happened while checking commit",
+          new CommitValidationMessage(cause.getMessage(), true),
+          e);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      logger.atSevere().withCause(e).log("%s", e.getMessage());
+      throw new CommitValidationException(
+          "Verification of commit has been interrupted",
+          new CommitValidationMessage(e.getMessage(), true),
+          e);
+    }
+
+    ValidationResponse response;
+    try {
+      response = gson.fromJson(httpResponse.body(), ValidationResponse.class);
+    } catch (JsonSyntaxException e) {
+      logger.atSevere().withCause(e).log("%s", e.getMessage());
+      throw new CommitValidationException(
+          "An error happened while retrieving validation response, please contact the"
+              + " administrator if this error persists",
+          e);
+    }
+    // an off-shape or error body deserializes to null commits; reject it rather than pass.
+    if (response == null || response.commits() == null) {
+      throw new CommitValidationException(
+          "The ECA service returned an incomplete or malformed response, please contact the"
+              + " administrator if this error persists");
+    }
+    logger.atFine().log("Response object: %s", response);
+    return response;
   }
 
   /**
@@ -135,31 +148,18 @@ abstract class BaseEclipseCommitValidator {
    * @return a Commit object to be posted to the ECA validation service.
    */
   private static Commit getRequestCommit(RevCommit src, PersonIdent author, PersonIdent committer) {
-    // load commit object with information contained in the commit
-    Commit.Builder c = Commit.builder();
-    c.subject(src.getShortMessage());
-    c.hash(src.name());
-    c.body(src.getFullMessage());
-    c.head(true);
-
-    // get the parent commits, and retrieve their hashes
     RevCommit[] parents = src.getParents();
     List<String> parentHashes = new ArrayList<>(parents.length);
     for (RevCommit parent : parents) {
       parentHashes.add(parent.name());
     }
-    c.parents(parentHashes);
-
-    // convert the commit users to objects to be passed to ECA service
-    GitUser.Builder authorGit = GitUser.builder();
-    authorGit.mail(author.getEmailAddress());
-    authorGit.name(author.getName());
-    GitUser.Builder committerGit = GitUser.builder();
-    committerGit.mail(committer.getEmailAddress());
-    committerGit.name(committer.getName());
-
-    c.author(authorGit.build());
-    c.committer(committerGit.build());
-    return c.build();
+    return new Commit(
+        src.name(),
+        src.getShortMessage(),
+        src.getFullMessage(),
+        parentHashes,
+        new GitUser(author.getName(), author.getEmailAddress()),
+        new GitUser(committer.getName(), committer.getEmailAddress()),
+        /* head= */ true);
   }
 }

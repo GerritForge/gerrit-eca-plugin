@@ -8,46 +8,9 @@
  */
 package org.eclipse.foundation.gerrit.validation;
 
-import com.google.auto.value.AutoValue;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-
 /**
- * Basic object representing a Git users data required for verification written with AutoValue.
+ * Basic object representing a Git users data required for verification.
  *
  * @author Martin Lowe
  */
-@AutoValue
-public abstract class GitUser {
-  public abstract String name();
-
-  public abstract String mail();
-
-  public static JsonAdapter<GitUser> jsonAdapter(Moshi moshi) {
-    return new AutoValue_GitUser.MoshiJsonAdapter(moshi);
-  }
-
-  static Builder builder() {
-    return new AutoValue_GitUser.Builder();
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder builder2 = new StringBuilder();
-    builder2.append("GitUser [name()=");
-    builder2.append(name());
-    builder2.append(", mail()=");
-    builder2.append(mail());
-    builder2.append("]");
-    return builder2.toString();
-  }
-
-  @AutoValue.Builder
-  abstract static class Builder {
-    abstract Builder name(String name);
-
-    abstract Builder mail(String mail);
-
-    abstract GitUser build();
-  }
-}
+public record GitUser(String name, String mail) {}

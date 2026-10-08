@@ -49,9 +49,11 @@ git clone https://review.gerrithub.io/GerritForge/gerrit-eca-plugin
 
 cd gerrit/plugins
 ln -s ../../gerrit-eca-plugin .
-rm external_plugin_deps.bzl
-ln -s gerrit-eca-plugin/external_plugin_deps.bzl .
 ```
+
+The plugin has no third-party dependencies: it talks to the Eclipse ECA
+service with the JDK HTTP client (`java.net.http`) and serializes JSON with
+Gson, which Gerrit already provides.
 
 Example of building the `gerrit-eca-plugin` plugin:
 
