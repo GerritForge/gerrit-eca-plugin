@@ -1,0 +1,29 @@
+module(name = "gerrit-eca-plugin")
+
+bazel_dep(name = "rules_jvm_external", version = "6.10")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "eca_plugin_deps",
+    artifacts = [
+        "com.squareup.okio:okio:1.17.2",
+        "com.squareup.okhttp3:okhttp:3.14.9",
+        "com.squareup.okhttp3:logging-interceptor:3.14.9",
+        "com.squareup.retrofit2:retrofit:2.8.2",
+        "com.squareup.retrofit2:converter-moshi:2.8.2",
+        "com.squareup.moshi:moshi:1.9.2",
+        "com.ryanharter.auto.value:auto-value-moshi-annotations:1.0.0",
+        "com.ryanharter.auto.value:auto-value-moshi-extension:1.1.0",
+        "com.ryanharter.auto.value:auto-value-moshi-factory:1.1.0",
+    ],
+    duplicate_version_warning = "error",
+    fail_if_repin_required = True,
+    fail_on_missing_checksum = True,
+    fetch_sources = True,
+    lock_file = "//:eca_plugin_deps.lock.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+    version_conflict_policy = "pinned",
+)
+use_repo(maven, "eca_plugin_deps")

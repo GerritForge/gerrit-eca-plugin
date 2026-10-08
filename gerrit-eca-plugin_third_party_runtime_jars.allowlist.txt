@@ -1,0 +1,6 @@
+converter-moshi
+logging-interceptor
+moshi
+okhttp
+okio
+retrofit

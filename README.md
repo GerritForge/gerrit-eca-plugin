@@ -40,6 +40,8 @@ How to build
 
 The plugin can only be built in tree mode, by cloning
 Gerrit and the `gerrit-eca-plugin` plugin code, and checking them out on the desired branch.
+It requires a Bzlmod-based Gerrit, i.e. one that wires plugins via
+`plugins/external_plugin_deps.MODULE.bazel`.
 
 Example of cloning Gerrit and `gerrit-eca-plugin` for a build:
 
@@ -49,8 +51,8 @@ git clone https://review.gerrithub.io/GerritForge/gerrit-eca-plugin
 
 cd gerrit/plugins
 ln -s ../../gerrit-eca-plugin .
-rm external_plugin_deps.bzl
-ln -s gerrit-eca-plugin/external_plugin_deps.bzl .
+rm -f external_plugin_deps.MODULE.bazel
+ln -s gerrit-eca-plugin/external_plugin_deps.MODULE.bazel .
 ```
 
 Example of building the `gerrit-eca-plugin` plugin:
