@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7001a533_1a0dd5ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-10-08T19:25:24Z",
+      "side": 1,
+      "message": "I actually also thought about it: why is this plugin so complex? To be honest with you, it could just be a simple Groovy script, isn\u0027t it?\n\nShall we add the author from the Eclipse Foundation to review it?\n\n@matthias.sohn@sap.com, what do you think?",
+      "revId": "c87445784fd343b6c2b94e5a0a9c116231f97570",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
